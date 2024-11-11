@@ -1,21 +1,20 @@
-Static Website Example
+Setup Dockerfile and gitlab-pipeline
 ----------------------
 
-To be used with Cloud Academy labs.
+###prerequisites
+- **Docker**
+- **gitlab**
+- **heroku cli**
 
+### Docker setup 
 
-License
-----------------------
+1. clone the project from github
+2. Build the project with docker 
+3. Run the project
 
-This static website is based on the Dimension template by [HTML5 UP](https://html5up.net/)
+###gitlab pipeline
+The steps for the gitlab pipeline are the following:
 
-Creative Commons License
-All of the site templates I create for [HTML5 UP](https://html5up.net/) are licensed under the Creative Commons Attribution 3.0 License, which means you can:
- - Use them for personal stuff
- - Use them for commercial stuff
- - Change them however you like
-
-
-... all for free, yo. In exchange, just give HTML5 UP credit for the design and tell your friends about it :)
-
-More info [here](https://html5up.net/license).
+- **Build** the Docker image.
+- **Push** the image to Docker Hub.
+- **Deploy** the image to Heroku.
