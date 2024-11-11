@@ -1,0 +1,38 @@
+stages:
+  - build
+  - push
+  - deploy  
+
+variables:
+  DOCKER_IMAGE: aymericlibam65412/static-website
+  HEROKU_APP_NAME: static-website
+  HEROKU_API_KEY: $HEROKU_API_KEY
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t $DOCKER_IMAGE .
+
+push:
+  stage: push
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+    - docker push $DOCKER_IMAGE
+
+deploy:
+  stage: deploy
+  image: ruby:2.7 
+  script:
+    - curl https://cli-assets.heroku.com/install.sh | sh
+    - echo $HEROKU_API_KEY | heroku auth:token
+    - heroku container:login
+    - heroku container:push web --app $HEROKU_APP_NAME
+    - heroku container:release web --app $HEROKU_APP_NAME
+  only:
+    - main
